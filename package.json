@@ -10,6 +10,26 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Papangkorn Pitjawong",
+  "license": "MIT",
+
+  "keywords": [
+    "git",
+    "link",
+    "git remote",
+    "git remote ssh",
+    "git remote https",
+    "git show link",
+    "git show-link",
+    "commit",
+    "https",
+    "ssh",
+    "github",
+    "gitlab",
+    "bitbucket"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TAHPAPANGKORN/git-show-link"
+  }
 }
