@@ -1,36 +1,36 @@
 #!/usr/bin/env node
 import { execSync } from 'child_process';
+import { parseArgs } from 'node:util';
+
+const config = {
+  options: {
+    commit: { type: 'string', short: 'c' },
+    'current-commit': { type: 'boolean', short: 'C' },
+    open: { type: 'boolean', short: 'o' },
+    help: { type: 'boolean', short: 'h' }
+  }
+};
+
+let values;
+try {
+  const parsed = parseArgs(config);
+  values = parsed.values;
+} catch (error) {
+  console.error(`\nError: ${error.message}`);
+  showHelpMessage();
+  process.exit(1);
+}
+
+if (values.help) {
+  showHelpMessage();
+  process.exit(0);
+}
+
+const isCommitLink = !!(values.commit || values['current-commit']);
+const targetCommit = values['current-commit'] ? 'HEAD' : values.commit;
+const shouldOpen = !!values.open;
 
 try {
-  const args = process.argv.slice(2);
-
-  let targetCommit = null;
-  let isCommitLink = false;
-  let shouldOpen = false;
-
-  if (args.includes('-C') || args.includes('--commit')) {
-    targetCommit = 'HEAD';
-    isCommitLink = true;
-  } else if (args.includes('-c')) {
-    const cIndex = args.indexOf('-c');
-    targetCommit = args[cIndex + 1];
-
-    if (!targetCommit || targetCommit.startsWith('-')) {
-      console.error("\nError: Please specify the commit hash after -c (e.g. git show-link -c a1b2c3d)\n");
-      process.exit(1);
-    }
-    isCommitLink = true;
-  }
-
-  if (args.includes('-o') || args.includes('--open')) {
-    shouldOpen = true;
-  }
-
-  if (args.includes('-h') || args.includes('--help')) {
-    showHelpMessage();
-    process.exit(0);
-  }
-
   const remoteUrl = execSync('git config --get remote.origin.url').toString().trim();
 
   let httpsUrl = remoteUrl;
@@ -67,13 +67,12 @@ try {
 
 function showHelpMessage() {
   console.log(`
-  Usage: git-show-link [options]
+Usage: git-show-link [options]
 
-  Options:
-    -c, --commit <hash>  Specify the commit hash (e.g. git show-link -c a1b2c3d)
-    -C, --commit         Specify the current commit (HEAD)
-    -o, --open           Open the link in the browser
-    -h, --help           Show this help message
-  `);
-
+Options:
+  -c, --commit <hash>      Specify the commit hash (e.g. git show-link -c a1b2c3d)
+  -C, --current-commit     Specify the current commit (HEAD)
+  -o, --open               Open the link in the browser
+  -h  --help               Show this help message
+`);
 }
