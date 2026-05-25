@@ -3,7 +3,7 @@ import { execSync } from 'child_process';
 
 try {
   const args = process.argv.slice(2);
-  
+
   let targetCommit = null;
   let isCommitLink = false;
   let shouldOpen = false;
@@ -13,8 +13,8 @@ try {
     isCommitLink = true;
   } else if (args.includes('-c')) {
     const cIndex = args.indexOf('-c');
-    targetCommit = args[cIndex + 1]; 
-    
+    targetCommit = args[cIndex + 1];
+
     if (!targetCommit || targetCommit.startsWith('-')) {
       console.error("\nError: Please specify the commit hash after -c (e.g. git show-link -c a1b2c3d)\n");
       process.exit(1);
@@ -22,19 +22,24 @@ try {
     isCommitLink = true;
   }
 
-  if (args.includes('-o') || args.includes('--open')){
+  if (args.includes('-o') || args.includes('--open')) {
     shouldOpen = true;
   }
 
+  if (args.includes('-h') || args.includes('--help')) {
+    showHelpMessage();
+    process.exit(0);
+  }
+
   const remoteUrl = execSync('git config --get remote.origin.url').toString().trim();
-  
+
   let httpsUrl = remoteUrl;
   if (remoteUrl.startsWith('git@')) {
     httpsUrl = remoteUrl.replace(':', '/').replace('git@', 'https://');
   }
   httpsUrl = httpsUrl.replace(/\.git$/, '');
 
-  let finalLink = httpsUrl; 
+  let finalLink = httpsUrl;
 
   if (isCommitLink) {
     const hash = execSync(`git rev-parse ${targetCommit}`).toString().trim();
@@ -43,7 +48,7 @@ try {
 
   console.log(`\nLink: \x1b[36m\x1b[4m${finalLink}\x1b[0m\n`);
 
-if (shouldOpen) {
+  if (shouldOpen) {
     const os = process.platform;
     if (os === 'darwin') {
       execSync(`open "${finalLink}"`);
@@ -58,4 +63,17 @@ if (shouldOpen) {
 } catch (error) {
   console.error("\nError: Please make sure you are in a Git repository, have a remote configured, or typed the correct commit hash.\n");
   process.exit(1);
+}
+
+function showHelpMessage() {
+  console.log(`
+  Usage: git-show-link [options]
+
+  Options:
+    -c, --commit <hash>  Specify the commit hash (e.g. git show-link -c a1b2c3d)
+    -C, --commit         Specify the current commit (HEAD)
+    -o, --open           Open the link in the browser
+    -h, --help           Show this help message
+  `);
+
 }
