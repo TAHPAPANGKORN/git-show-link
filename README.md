@@ -47,7 +47,7 @@ git show-link -C
 
 ```bash
 # Get Link With Custom Commit
-git show-link -C <commit_hash>
+git show-link -c <commit_hash>
 ```
 
 ### License
