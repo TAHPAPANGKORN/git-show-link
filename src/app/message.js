@@ -1,6 +1,10 @@
+import { version } from "./index.js"
+
 export const showHelpMessage = () => {
-        console.log(`
+    console.log(`
     Usage: git-show-link [options]
+
+    Version: ${version}
 
     Options:
     -c, --commit <hash>      Specify the commit hash (e.g. git show-link -c a1b2c3d)
