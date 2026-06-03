@@ -7,7 +7,8 @@ export const flags = () => {
             commit: { type: 'string', short: 'c' },
             'current-commit': { type: 'boolean', short: 'C' },
             open: { type: 'boolean', short: 'o' },
-            help: { type: 'boolean', short: 'h' }
+            help: { type: 'boolean', short: 'h' },
+            version: { type: 'boolean', short: 'v'}
         }
     };
 

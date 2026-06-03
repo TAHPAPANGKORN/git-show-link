@@ -1,4 +1,4 @@
-# git-show-link
+# git-show-link 
 
 Get clickable HTTPS commit links from SSH remotes
 
@@ -30,25 +30,37 @@ yarn global add git-show-link
 
 ## CLI
 
-```bash
-# Help
-git show-link -h
-```
+- **Help Command**
+    ```bash
+    git show-link -h
+    ```
 
-```bash
-# Get HTTPS commit link from SSH remotes
-git show-link
-```
+- **Get HTTPS commit link from SSH remotes**
+    ```bash
+    git show-link
+    ```
 
-```bash
-# Get Link With Currecnt Commit
-git show-link -C
-```
+- **Get link and open in browser**
+    ```bash
+    git show-link -o
+    ```
 
-```bash
-# Get Link With Custom Commit
-git show-link -c <commit_hash>
-```
+
+- **Get Link With Currecnt Commit**
+    ```bash
+    git show-link -C
+    ```
+
+- **Get Link With Custom Commit**
+    ```bash
+    git show-link -c <commit_hash>
+    ```
+
+- **Show Version**
+    ```bash
+    git show-link -v 
+    ```
+
 
 ### License
 

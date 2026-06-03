@@ -4,8 +4,19 @@ import { showHelpMessage } from './message.js';
 import { flags } from './flags.js';
 
 import { execSync } from 'child_process'
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+const { version } = require('../../package.json');
+
 
 const values = flags();
+
+if (values.version) {
+  console.log(`git show-link version: ${version}`);
+  process.exit(0);
+}
+
 
 if (values.help) {
   showHelpMessage();
