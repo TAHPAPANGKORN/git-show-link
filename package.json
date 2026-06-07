@@ -1,6 +1,6 @@
 {
   "name": "git-show-link",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "description": "Get clickable HTTPS commit links from SSH remotes",
   "main": "src/app/index.js",
   "type": "module",

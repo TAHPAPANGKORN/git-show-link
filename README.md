@@ -3,6 +3,7 @@
 Get clickable HTTPS commit links from SSH remotes
 
 ## Work with
+![homebrew](https://img.shields.io/badge/homebrew-formula-orange?style=for-the-badge&logo=homebrew)
 ![npm](https://img.shields.io/badge/npm-11.8.0-CB3837?style=for-the-badge&logo=npm)
 ![pnpm](https://img.shields.io/badge/pnpm-10.14.0-F69220?style=for-the-badge&logo=pnpm)
 ![yarn](https://img.shields.io/badge/yarn-4.9.2-2C8EBB?style=for-the-badge&logo=yarn)
@@ -12,7 +13,7 @@ Get clickable HTTPS commit links from SSH remotes
 
 
 
-## Install Global
+## Install Global (Recommended)
 
 ```bash
 # npm
@@ -28,6 +29,19 @@ bun add -g git-show-link
 yarn global add git-show-link
 ```
 
+## Alternative Installation
+- ### Homebrew (MacOS)
+    ```bash
+    brew tap TAHPAPANGKORN/git-show-link https://github.com/TAHPAPANGKORN/git-show-link.git
+
+    brew install git-show-link
+    ```
+
+- ### Manual Installation (Linux, MacOS)
+    ```bash
+    curl -fsSL https://raw.githubusercontent.com/TAHPAPANGKORN/git-show-link/master/install.sh | bash
+    ```
+    
 ## CLI
 
 - **Help Command**
@@ -60,7 +74,6 @@ yarn global add git-show-link
     ```bash
     git show-link -v 
     ```
-
 
 ### License
 
