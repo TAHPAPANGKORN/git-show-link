@@ -39,7 +39,12 @@ yarn global add git-show-link
 
 - ### Manual Installation (Linux, MacOS)
     ```bash
-    curl -fsSL https://raw.githubusercontent.com/TAHPAPANGKORN/git-show-link/master/install.sh | bash
+    curl -fsSL https://raw.githubusercontent.com/TAHPAPANGKORN/git-show-link/main/scripts/install.sh | bash
+    ```
+
+- ### Uninstallation (Manual Install)
+    ```bash
+    curl -fsSL https://raw.githubusercontent.com/TAHPAPANGKORN/git-show-link/main/scripts/uninstall.sh | bash
     ```
     
 ## CLI
