@@ -1,8 +1,8 @@
 class GitShowLink < Formula
   desc "Get clickable HTTPS commit links from SSH remotes"
   homepage "https://github.com/TAHPAPANGKORN/git-show-link"
-  url "https://registry.npmjs.org/git-show-link/-/git-show-link-1.2.3.tgz"
-  sha256 "b3d86c4f309b54ab5afb9ab7830987180bd0ef37d809da542e9e93d7bc1d357e"
+  url "https://registry.npmjs.org/git-show-link/-/git-show-link-1.3.0.tgz"
+  sha256 "3a11fc07f18618ce16fb26158de54fed92038ec92fa32ff4d1714ea25233d95e"
   license "MIT"
 
   depends_on "node"
