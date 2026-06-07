@@ -1,26 +1,23 @@
 import { parseArgs } from 'node:util';
-import { showHelpMessage } from './message.js';
 
-export const flags = () => {
-    const config = {
-        options: {
-            commit: { type: 'string', short: 'c' },
-            'current-commit': { type: 'boolean', short: 'C' },
-            open: { type: 'boolean', short: 'o' },
-            help: { type: 'boolean', short: 'h' },
-            version: { type: 'boolean', short: 'v'}
-        }
-    };
-
-    let values;
-    try {
-        const parsed = parseArgs(config);
-        values = parsed.values;
-    } catch (error) {
-        console.error(`\nError: ${error.message}`);
-        showHelpMessage();
-        process.exit(1);
+/**
+ * Parses options from process.argv.
+ * @returns {object} The parsed key-value pair of options.
+ * @throws {Error} If argument parsing fails.
+ */
+export const parseCliArgs = () => {
+  const config = {
+    options: {
+      commit: { type: 'string', short: 'c' },
+      'current-commit': { type: 'boolean', short: 'C' },
+      branch: { type: 'string', short: 'b' },
+      'current-branch': { type: 'boolean', short: 'B' },
+      open: { type: 'boolean', short: 'o' },
+      help: { type: 'boolean', short: 'h' },
+      version: { type: 'boolean', short: 'v'}
     }
+  };
 
-    return values;
-}
+  const parsed = parseArgs(config);
+  return parsed.values;
+};

@@ -70,6 +70,16 @@ yarn global add git-show-link
     git show-link -c <commit_hash>
     ```
 
+- **Get Link With Current Branch**
+    ```bash
+    git show-link -B
+    ```
+
+- **Get Link With Custom Branch**
+    ```bash
+    git show-link -b <branch_name>
+    ```
+
 - **Show Version**
     ```bash
     git show-link -v 

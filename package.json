@@ -1,18 +1,17 @@
 {
   "name": "git-show-link",
-  "version": "1.2.3",
+  "version": "1.3.0",
   "description": "Get clickable HTTPS commit links from SSH remotes",
-  "main": "src/app/index.js",
+  "main": "src/cli.js",
   "type": "module",
   "bin": {
-    "git-show-link": "./src/app/index.js"
+    "git-show-link": "./bin/git-show-link.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Papangkorn Pitjawong",
   "license": "MIT",
-
   "keywords": [
     "git",
     "link",
