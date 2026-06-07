@@ -1,0 +1,73 @@
+name: Update Homebrew Formula
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch: # Enables manual triggering from GitHub UI
+
+permissions:
+  contents: write
+
+jobs:
+  update-formula:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get version
+        id: get_version
+        run: |
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            VERSION="${{ github.event.release.tag_name }}"
+            VERSION="${VERSION#v}" # remove leading 'v' if present
+          else
+            VERSION=$(node -p "require('./package.json').version")
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Fetch SHA256 of npm tarball
+        id: fetch_sha256
+        run: |
+          VERSION="${{ steps.get_version.outputs.version }}"
+          TARBALL_URL="https://registry.npmjs.org/git-show-link/-/git-show-link-${VERSION}.tgz"
+          
+          echo "Fetching tarball from $TARBALL_URL"
+          # Wait up to 30 seconds for npm to process the publish
+          for i in {1..6}; do
+            if curl -sLf "$TARBALL_URL" -o tarball.tgz; then
+              break
+            fi
+            echo "Tarball not available yet, waiting 5 seconds..."
+            sleep 5
+          done
+          
+          if [ ! -f tarball.tgz ]; then
+            echo "Error: Failed to fetch tarball from npm"
+            exit 1
+          fi
+          
+          SHA256=$(shasum -a 256 tarball.tgz | awk '{print $1}')
+          echo "sha256=$SHA256" >> $GITHUB_OUTPUT
+          echo "Calculated SHA256: $SHA256"
+
+      - name: Update Formula
+        run: |
+          VERSION="${{ steps.get_version.outputs.version }}"
+          SHA256="${{ steps.fetch_sha256.outputs.sha256 }}"
+          FORMULA_PATH="Formula/git-show-link.rb"
+          
+          # Replace url and sha256 in the formula file
+          sed -i -E "s|url \"https://registry.npmjs.org/git-show-link/-/git-show-link-.*.tgz\"|url \"https://registry.npmjs.org/git-show-link/-/git-show-link-${VERSION}.tgz\"|g" "$FORMULA_PATH"
+          sed -i -E "s|sha256 \".*\"|sha256 \"${SHA256}\"|g" "$FORMULA_PATH"
+          
+          echo "Updated formula file contents:"
+          cat "$FORMULA_PATH"
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add Formula/git-show-link.rb
+          git commit -m "chore: update Homebrew formula to version ${{ steps.get_version.outputs.version }}" || echo "No changes to commit"
+          git push origin HEAD:${{ github.ref }}
