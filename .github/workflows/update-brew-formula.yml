@@ -55,7 +55,7 @@ jobs:
         run: |
           VERSION="${{ steps.get_version.outputs.version }}"
           SHA256="${{ steps.fetch_sha256.outputs.sha256 }}"
-          FORMULA_PATH="Formula/git-show-link.rb"
+          FORMULA_PATH="formula/git-show-link.rb"
           
           # Replace url and sha256 in the formula file
           sed -i -E "s|url \"https://registry.npmjs.org/git-show-link/-/git-show-link-.*.tgz\"|url \"https://registry.npmjs.org/git-show-link/-/git-show-link-${VERSION}.tgz\"|g" "$FORMULA_PATH"
